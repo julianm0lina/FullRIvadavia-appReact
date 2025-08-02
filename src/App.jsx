@@ -12,17 +12,10 @@ function App() {
         {/* Ruta principal - catálogo completo */}
         <Route
           path="/"
-          element={<ItemListContainer greeting="¡Bienvenido a nuestra tienda online!" />}
-        />
-        {/* Ruta para filtrar por categoría */}
-        <Route path="/category/:categoryId" element={<ItemListContainer />} />
-        {/* Ruta para ver detalle de producto */}
-        <Route path="/item/:itemId" element={<ItemDetailContainer />} />
-        {/* Ruta para manejar errores 404 */}
-        <Route
-          path="*"
-          element={<h2 className="text-center mt-4">404 - Página no encontrada</h2>}
-        />
+          element={<ItemListContainer greeting="¡Bienvenido a nuestra tienda online!" />}/>
+        <Route path="/category/:categoryId" element={<ItemListContainer />}/>
+        <Route path="/item/:itemId" element={<ItemDetailContainer />}/>
+        <Route path="*" element={<h2 className="text-center mt-4">404 - Página no encontrada</h2>}/>
       </Routes>
     </BrowserRouter>
   );

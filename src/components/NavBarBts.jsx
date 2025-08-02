@@ -17,9 +17,9 @@ function NavBarBts() {
             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
 
             <NavDropdown title="Categorías" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/category/Nuevos">Nuevos</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/Ofertas">Ofertas</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/Accesorios">Accesorios</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/nuevos">Nuevos</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/ofertas">Ofertas</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/mas vendidos">Mas Vendidos</NavDropdown.Item>
             </NavDropdown>
           </Nav>
 
