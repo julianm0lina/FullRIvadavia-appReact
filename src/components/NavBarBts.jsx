@@ -3,27 +3,31 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import CartWidgetRIcons from './CartWidgetRIcons';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { use } from 'react';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 
 function NavBarBts() {
+  const {cart} = useContext(CartContext);
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand as={Link} to="/">FullRivadavia</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/">FullRivadavia</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            <Nav.Link as={NavLink} to="/">Inicio</Nav.Link>
 
             <NavDropdown title="Categorías" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/category/nuevos">Nuevos</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/ofertas">Ofertas</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/mas vendidos">Mas Vendidos</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/category/nuevos">Nuevos</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/category/ofertas">Ofertas</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/category/mas vendidos">Mas Vendidos</NavDropdown.Item>
             </NavDropdown>
           </Nav>
 
-          <CartWidgetRIcons />
+         { cart.length > 0 && <Nav.Link as={NavLink} to="/cart"><CartWidgetRIcons /> </Nav.Link>}    
         </Navbar.Collapse>
       </Container>
     </Navbar>

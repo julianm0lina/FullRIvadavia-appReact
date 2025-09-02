@@ -17,7 +17,7 @@ const Item = ({ prod }) => {
           <Button variant="primary">Ver más</Button>
         </Link>
       </Card.Body>
-      <ItemCount stock={10} initial={1} onAdd={(cantidad) => alert(`Agregado ${cantidad} al carrito`)} />
+
     </Card>
   );
 };

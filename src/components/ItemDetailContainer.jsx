@@ -1,21 +1,50 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getProductoPorId } from "../mock/AsyncService";
 import ItemDetail from "./ItemDetail";
+import LoaderComponent from "./LoaderComponent";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../service/firebase";
 
 const ItemDetailContainer = () => {
-  const { itemId } = useParams();
+  const { itemId } = useParams(); // esto ya viene como string
   const [producto, setProducto] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [invalid, setInvalid] = useState(false);
 
   useEffect(() => {
-    getProductoPorId(itemId)
-      .then((prod) => setProducto(prod))
-      .catch((error) => console.error("Error al cargar producto:", error));
+    setLoading(true);
+    // referencia del documento
+
+    const docRef = doc(db, "productos", itemId);
+    getDoc(docRef)
+      .then((doc) => {
+        if (doc.data()) {
+          setProducto({ id: doc.id, ...doc.data() });
+        }else {
+          setInvalid(true);
+        }
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => setLoading(false));
+      
+    
   }, [itemId]);
 
-  if (!producto) return <p>Cargando producto...</p>;
+  if (invalid) return <div><h2>Producto no encontrado</h2> <Link className="btn btn-primary" to="/">Volver al inicio</Link>;</div>
+  if (error) return <p>Error: {error.message}</p>;
 
-  return <ItemDetail producto={producto} />;
+
+  return (
+  <>
+    {loading && <LoaderComponent />}
+    {!loading && producto && <ItemDetail product={producto} />}
+    {!loading && !producto && <p>Producto no encontrado</p>}
+  </>
+)
 };
 
 export default ItemDetailContainer;

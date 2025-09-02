@@ -1,15 +1,7 @@
-const productos = [
+export const productos = [
+
   {
-    id: "01",
-    nombre: "Parlante",
-    descripcion: "Parlante bluetooth con sonido envolvente",
-    precio: 1000,
-    stock: 15,
-    categoria: "nuevos",
-    img: "https://i.postimg.cc/T1hPBRR1/20250523-212254.png",
-  },
-  {
-    id: "02",
+    
     nombre: "Auriculares Gamers",
     descripcion: "Auriculares inalámbricos con cancelación de ruido",
     precio: 2000,
@@ -18,7 +10,7 @@ const productos = [
     img: "https://i.postimg.cc/bYFrk2Tt/20250716-182213.png",
   },
   {
-    id: "03",
+    
     nombre: "Mouse Inalámbrico",
     descripcion: "Mouse gamer con iluminación RGB",
     precio: 1500,
@@ -27,7 +19,7 @@ const productos = [
     img: "https://i.postimg.cc/3R8NCXVg/20250524-195937.png",
   },
     {
-    id: "04",
+  
     nombre: "Teclado Inalámbrico",
     descripcion: "Teclado replegable inalambrico",
     precio: 2000,
@@ -36,7 +28,7 @@ const productos = [
     img: "https://i.postimg.cc/1XTzQLtH/20250524-195926.png",
   },
     {
-    id: "05",
+ 
     nombre: "Auriculares Inlambricos",
     descripcion: "Auriculares bluetooth con sonido envolvente",
     precio: 3000,
