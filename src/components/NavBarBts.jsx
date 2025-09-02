@@ -22,7 +22,7 @@ function NavBarBts() {
             <NavDropdown title="Categorías" id="basic-nav-dropdown">
               <NavDropdown.Item as={NavLink} to="/category/nuevos">Nuevos</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/category/ofertas">Ofertas</NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/category/mas-vendidos">Mas Vendidos</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/category/mas vendidos">Mas Vendidos</NavDropdown.Item>
             </NavDropdown>
           </Nav>
 
