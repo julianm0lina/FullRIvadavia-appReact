@@ -1,45 +1,49 @@
-
-import { useContext } from 'react'
+import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
+const CartView = () => {
+  const { cart, clear, removeItem, cartTotal } = useContext(CartContext);
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Componente que muestra el carrito de compras
- * 
- * @returns Un JSX que muestra los productos en el carrito
- * con sus respectivos precios y cantidades, y un boton
- * para eliminar cada producto. Tambien muestra el total
- * a pagar y un boton para borrar el carrito y otro para
-/*******  342b86cb-3d62-4749-a0da-d375ee25e78b  *******/const CartView = () => {
-  const  {cart, clear, removeItem, cartTotal} = useContext (CartContext);
   return (
-    <div>
-      <h1>Tu Caririto</h1>
-      <div>
-        {cart.map((prod) => (
-          <div key={prod.id} style={{border: '1px solid black', margin: '10px', padding: '10px'}}>
-            <img src={prod.img} alt={prod.nombre} style={{width: '50px'}} />
-            <span>{prod.nombre}</span>
-            <span>$ {prod.precio}</span>
-            <span>{prod.quantity} Unidades</span>
-            <span>Subtotal: $ {prod.quantity * prod.precio}</span>
-            <button className='btn btn-danger' onClick={() => removeItem(prod.id)} >X</button>
+    <div className="container mt-4">
+      <h1 className="mb-4">Tu Carrito</h1>
+
+      {cart.map((prod) => (
+        <div 
+          key={prod.id} 
+          className="d-flex align-items-center justify-content-between border rounded p-3 mb-3"
+        >
+          <img src={prod.img} alt={prod.nombre} style={{ width: '80px', height: '80px', objectFit: 'cover' }} />
+          
+          <div className="flex-grow-1 ms-3">
+            <h5>{prod.nombre}</h5>
+            <p className="mb-1">Precio unitario: $ {prod.precio}</p>
+            <p className="mb-0">Cantidad: {prod.quantity}</p>
           </div>
-        ))
-        }
 
-      </div>
-      <span>Total a pagar: $ {cartTotal()}, </span>
-      <div>
+          <div className="text-end">
+            <p className="mb-1">Subtotal: $ {prod.quantity * prod.precio}</p>
+            <button className="btn btn-danger btn-sm" onClick={() => removeItem(prod.id)}>Eliminar</button>
+          </div>
+        </div>
+      ))}
 
-            <button className='btn btn-danger' onClick={clear}>Borrar Carrito</button>
-            <Link className='btn btn-success' to={'/checkout'}>Comprar</Link>
+      {cart.length > 0 && (
+        <div className="d-flex justify-content-between align-items-center mt-4">
+          <h4>Total a pagar: $ {cart.reduce((acc, prod) => acc + prod.quantity * prod.precio, 0)}</h4>
+          <div>
+            <button className="btn btn-danger me-2" onClick={clear}>Vaciar Carrito</button>
+            <Link className="btn btn-success" to="/checkout">Finalizar Compra</Link>
+          </div>
+        </div>
+      )}
 
-      </div>
+      {cart.length === 0 && (
+        <p className="text-center mt-4">No hay productos en tu carrito.</p>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default CartView
+export default CartView;

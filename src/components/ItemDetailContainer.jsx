@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProductoPorId } from "../mock/AsyncService";
 import ItemDetail from "./ItemDetail";
 import LoaderComponent from "./LoaderComponent";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../service/firebase";
 
 const ItemDetailContainer = () => {
-  const { itemId } = useParams(); // esto ya viene como string
+  const { itemId } = useParams();
   const [producto, setProducto] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,36 +14,46 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    // referencia del documento
 
     const docRef = doc(db, "productos", itemId);
     getDoc(docRef)
-      .then((doc) => {
-        if (doc.data()) {
-          setProducto({ id: doc.id, ...doc.data() });
-        }else {
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          setProducto({ id: docSnap.id, ...docSnap.data() });
+        } else {
           setInvalid(true);
         }
       })
-      .catch((error) => {
-        setError(error);
+      .catch((err) => {
+        setError(err);
       })
       .finally(() => setLoading(false));
-      
-    
   }, [itemId]);
 
-  if (invalid) return <div><h2>Producto no encontrado</h2> <Link className="btn btn-primary" to="/">Volver al inicio</Link>;</div>
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <LoaderComponent />;
 
+  if (error)
+    return (
+      <div className="text-center mt-4">
+        <h2>Error al cargar el producto</h2>
+        <p>{error.message}</p>
+        <Link className="btn btn-primary mt-2" to="/">Volver al inicio</Link>
+      </div>
+    );
+
+  if (invalid)
+    return (
+      <div className="text-center mt-4">
+        <h2>Producto no encontrado</h2>
+        <Link className="btn btn-primary mt-2" to="/">Volver al inicio</Link>
+      </div>
+    );
 
   return (
-  <>
-    {loading && <LoaderComponent />}
-    {!loading && producto && <ItemDetail product={producto} />}
-    {!loading && !producto && <p>Producto no encontrado</p>}
-  </>
-)
+    <div>
+      {producto && <ItemDetail product={producto} />}
+    </div>
+  );
 };
 
 export default ItemDetailContainer;

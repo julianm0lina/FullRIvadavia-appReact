@@ -4,13 +4,18 @@ import { CartContext } from "../context/CartContext";
 import Badge from "react-bootstrap/Badge";
 
 const CartWidgetRIcons = () => {
-  const { cartTotal} = useContext(CartContext);
+  const { cartTotal } = useContext(CartContext);
+
+  const total = cartTotal();
 
   return (
     <>
-      <BsCart4 color="black" />
-
-      <Badge bg="danger" className="ms-1"> {cartTotal()} </Badge>
+      <BsCart4 color="white" size={24} />
+      {total > 0 && (
+        <Badge bg="danger" className="ms-1">
+          {total}
+        </Badge>
+      )}
     </>
   );
 };

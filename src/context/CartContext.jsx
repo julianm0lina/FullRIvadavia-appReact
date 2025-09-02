@@ -18,11 +18,11 @@ export const CartProvider = ({ children }) => {
     } else {
       setCart([...cart, { ...item, quantity }]);
     }
-  }
+  };
 
   // Eliminar items del carrito
   const removeItem = (id) => {
-    setCart(prevCart => cart.filter(prod => prod.id !== id));
+    setCart(prevCart => prevCart.filter(prod => prod.id !== id));
   };
 
   // Vaciar el carrito
@@ -31,11 +31,15 @@ export const CartProvider = ({ children }) => {
   // Cantidad total de items
   const cartTotal = () => cart.reduce((acc, prod) => acc + prod.quantity, 0);
 
+  // Total a pagar
+  const cartTotalPrice = () =>
+    cart.reduce((acc, prod) => acc + prod.quantity * prod.precio, 0);
+
   // Ver si un item ya está en el carrito
   const isInCart = (id) => cart.some(prod => prod.id === id);
 
   return (
-    <CartContext.Provider value={{ cart, addItem, removeItem, clear, cartTotal, isInCart }}>
+    <CartContext.Provider value={{ cart, addItem, removeItem, clear, cartTotal, cartTotalPrice, isInCart }}>
       {children}
     </CartContext.Provider>
   );
